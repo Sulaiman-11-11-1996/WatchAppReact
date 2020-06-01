@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import DashBoardItem from './DashBoardItem'
 import {Link} from 'react-router-dom'
-
+import {connect} from 'react-redux'
+import {getWatches} from '../../actions/projectActions'
 class DashBoard extends Component {
+
+    componentDidMount(){
+        this.props.getWatches()
+
+    }
     render() {
+        const watch = this.props.watch
+        const watchComponent = watch.map(watch=>(<DashBoardItem key ={watch.id} watch={watch} />))
         return (
             <div className="projects">
         <div className="container">
@@ -36,7 +44,7 @@ class DashBoard extends Component {
 
                     }
 
-                    <DashBoardItem />
+                    {watchComponent}
                     
                     {
                         // <!-- End of Project Item Component -->
@@ -51,4 +59,8 @@ class DashBoard extends Component {
     }
 }
 
-export default DashBoard
+const mapStateToProps = (state) =>({
+    Watch:state.Watch.Watch
+})
+
+export default connect(mapStateToProps,{getWatches})(DashBoard)
