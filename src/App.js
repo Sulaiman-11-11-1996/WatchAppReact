@@ -1,25 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import Nav from './components/shared/Nav';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Welcome from './components/Welcome';
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import DashBoard from './components/dashboard/DashBoard';
+import CreateWatch from './components/dashboard/dashboardoperations/CreateWatch';
+import NotFound from './components/shared/NotFound';
+import {Provider} from 'react-redux';
+import store from './Store';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+    <BrowserRouter>
+    <Route path="/" component={Nav} />
+    <Switch>
+    <Route path="/" exact component={Welcome} />
+    <Route path="/dashboard" exact component={DashBoard} />
+    <Route path="/createwatch" exact component={CreateWatch} />
+    <Route path="/" component={NotFound} />
+    </Switch>
+    </BrowserRouter>
+    </Provider>
   );
 }
 
